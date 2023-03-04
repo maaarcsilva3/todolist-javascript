@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> To Do List JS</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="todo-list">
+            <h1>To-Do List</h1>
+
+            <input id="input_task" type="text" placeholder="Enter task">
+            <button id="add-button" onclick="addtask()">Add</button>
+            <div class="itemlist_container">
+                <ul id="item-list"> </ul>   
+            </div>    
+        </div>
+
+        <script>
+          
+
+            function addtask(){
+                
+                const input_task_get_value= document.getElementById("input_task");
+
+                const input_task_value =input_task_get_value.value;
+
+                const item_list = document.getElementById("item-list");
+
+                const new_item = document.createElement("li"); //create ng list 
+
+                new_item.innerText = input_task_value;  //kunin ang value to put inside sa ginawang list
+                
+                item_list.appendChild(new_item); //para mailagay ang li sa ul
+
+                input_task_get_value.value = ""; // clear the input field
+
+
+
+                
+                const edit_button = document.createElement("button");  //create variable na mag ccreate ng button
+                edit_button.classList.add("my-class"); // add class "my-class" to the new button element
+                edit_button.innerText = 'Edit';
+                
+                edit_button.onclick = function() {
+                    // create a text input field
+                    const input = document.createElement("input");
+                    input.className = "form_edit";
+                    input.type = "text";
+                   
+                    input.value = new_item.innerText;
+                    
+
+                    // replace the li element's text with the input field
+                    new_item.innerHTML = "";
+                    new_item.appendChild(input);
+                    const save_button = document.createElement("button");
+                    save_button.classList.add("my-class"); // add class "my-class" to the new button element
+                    save_button.innerText = "Save";
+
+                    // create a "Save" button to save the edited text
+
+                    save_button.onclick = function() {
+                        new_item.innerText = input.value;
+                        new_item.appendChild(edit_button);
+                        new_item.appendChild(edit_button);
+                        new_item.appendChild(delete_button);
+                        new_item.appendChild(done_button);
+                        
+                        
+                        input.remove();
+                        save_button.remove();
+                    };
+                    new_item.appendChild(save_button);
+                    
+                }
+                new_item.appendChild(edit_button);    //created button append to li
+
+
+                const delete_button = document.createElement("button");  
+                delete_button.classList.add("my-class"); // add class "my-class" to the new button element
+                delete_button.innerText = 'Delete';
+                delete_button.onclick = function() {
+                    item_list.removeChild(new_item);
+                    document.getElementById("add-button").disabled = false;
+                    document.getElementById ("add-button").innerHTML= "Add"; 
+                    
+
+                };
+                new_item.appendChild(delete_button);    
+
+
+                const done_button = document.createElement("button");  
+                done_button.classList.add("my-class"); // add class "my-class" to the new button element
+                done_button.innerText = 'Done';
+                done_button.onclick = function() {
+                    new_item.style.textDecoration = "line-through";
+
+                };
+                new_item.appendChild(done_button);    
+
+
+
+
+
+                //for limiting to 5 entry 
+                if (document.querySelectorAll("#item-list li").length >= 5 ){
+                    document.getElementById("add-button").disabled = true;
+                    document.getElementById ("input_task").placeholder= ""; //change placeholder text
+                    document.getElementById ("add-button").innerHTML= "Maximum of 5 Tasks Only";
+
+                } 
+
+
+           
+   
+            }
+
+        </script>
+
+
+
+    </body>
+</html>
